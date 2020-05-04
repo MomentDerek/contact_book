@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.moment.contact_book.mapper.UserMapper">
+
+    <select id="findByLoginName" resultType="com.moment.contact_book.entity.User">
+        select *
+        from user
+        where u_login_name = #{u_login_name}
+    </select>
+
+    <select id="findById" resultType="com.moment.contact_book.entity.User">
+        select *
+        from user
+        where u_id = #{u_id}
+    </select>
+
+    <insert id="insertUser">
+        insert into user (u_id, u_login_name, u_password, u_email)
+        values (#{User.UId}, #{User.ULoginName}, #{User.UPassword}, #{User.UEmail})
+    </insert>
+
+    <update id="updatePasswordByLoginName">
+        update user
+        set u_password = #{u_password}
+        where u_login_name = #{u_login_name}
+    </update>
+
+    <update id="updateInfoById">
+        update user
+        set u_name  = #{User.UName},
+            u_phone = #{User.UPhone},
+            u_sex   = #{User.USex},
+            u_email = #{User.UEmail}
+        where u_id = #{User.UId}
+    </update>
+
+    <delete id="deleteUserById">
+        delete
+        from user
+        where u_id = #{u_id}
+    </delete>
+
+
+</mapper>

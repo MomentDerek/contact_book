@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.moment.contact_book.mapper.ContactBookMapper">
+
+
+    <select id="findByUIdAndCId" resultType="com.moment.contact_book.entity.ContactBook">
+        select *
+        from contact_book
+        where u_id = #{u_id}
+          and c_id = #{c_id}
+    </select>
+
+    <select id="findByUIdAndCNameOrCSexOrCType" resultType="com.moment.contact_book.entity.ContactBook">
+        select * from contact_book
+        <where>
+            <if test="c_name != null and c_name != ''">
+                c_name = #{c_name}
+            </if>
+            <if test="c_sex != null and c_sex != ''">
+                and c_sex = #{c_sex}
+            </if>
+            <if test="c_type != null and c_type != ''">
+                and c_type = #{c_type}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertContact">
+        insert into contact_book (c_id, c_name, c_phone, c_sex, u_id)
+        values (#{c_name}, #{c_name}, #{c_phone}, #{c_sex}, #{u_id})
+    </insert>
+
+    <update id="updateInfoByCIdAndUId">
+        update contact_book
+        set c_name    = #{ContactBook.CName},
+            c_phone   = #{ContactBook.CPhone},
+            c_sex     = #{ContactBook.CSex},
+            c_type    = #{ContactBook.CType},
+            c_qq      = #{ContactBook.CQq},
+            c_address = #{ContactBook.CAddress},
+            c_work    = #{ContactBook.CWork}
+        where c_id = #{ContactBook.CId}
+          and u_id = #{ContactBook.UId}
+    </update>
+
+    <delete id="deleteContactByCIdAndUId">
+        delete
+        from contact_book
+        where u_id = #{u_id}
+          and c_id = #{c_id}
+    </delete>
+
+
+</mapper>

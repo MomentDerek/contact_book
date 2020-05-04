@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.moment.contact_book.mapper.ContactTypeMapper">
+
+    <select id="findByUIdAndTypeId" resultType="com.moment.contact_book.entity.ContactType">
+        select *
+        from contact_type
+        where u_id = #{u_id}
+          and type_id = #{type_id}
+    </select>
+
+    <select id="findById" resultType="com.moment.contact_book.entity.ContactType">
+        select *
+        from contact_type
+        where u_id = #{u_id}
+    </select>
+
+    <insert id="insertType">
+        insert into contact_type (u_id, type_id, type_name, type_comment)
+        values (#{Type.UId}, #{Type.TypeId}, #{Type.TypeName}, #{Type.TypeComment})
+    </insert>
+
+    <update id="updateInfoByUIdAndTypeId">
+        update contact_type
+        set type_name    = #{Type.TypeName},
+            type_comment = #{Type.TypeComment}
+        where u_id = #{Type.UId}
+          and type_id = #{Type.TypeId}
+    </update>
+
+    <delete id="deleteByUidAndTypeId">
+        delete
+        from contact_type
+        where u_id = #{u_id}
+          and type_id = #{type_id}
+    </delete>
+
+</mapper>

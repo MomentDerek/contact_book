@@ -1,0 +1,52 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+
+group = 'com.moment'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    implementation{
+        exclude module: 'spring-boot-starter-logging'
+        exclude module: 'logback-classic'
+        exclude module: 'log4j-over-slf4j'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext{
+    mybatisStarterVersion = "2.1.2"
+    druidStarterVersion = "1.1.22"
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:'+mybatisStarterVersion
+    implementation 'com.alibaba:druid-spring-boot-starter:'+druidStarterVersion
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

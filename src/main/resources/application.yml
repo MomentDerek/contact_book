@@ -1,0 +1,64 @@
+spring:
+########################## 数据源配置 ##########################################################
+  datasource:
+    username: root
+    password: momincong
+    url: jdbc:mysql://localhost:3306/contact_book_system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 每个连接最多缓存多少个SQL
+      max-pool-prepared-statement-per-connection-size: 20
+      # 检查空闲连接的频率，单位毫秒, 非正整数时表示不进行检查
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      # 检查池中的连接是否仍可用的 SQL 语句,drui会连接到数据库执行该SQL,
+      # 如果正常返回，则表示连接可用，否则表示连接不可用（此处由数据库类型决定，此处为MySQL）
+      validation-query: SELECT 'x'
+      # 当程序请求连接，池在分配连接时，是否先检查该连接是否有效。(高效)
+      test-while-idle: true
+      # 程序 申请 连接时,进行连接有效性检查（低效，影响性能，因默认打开，所以手动关闭）
+      test-on-borrow: false
+      # 程序 返还 连接时,进行连接有效性检查（同上）
+      test-on-return: false
+      # 是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大，
+      # 比如说oracle。在mysql下建议关闭
+      pool-prepared-statements: true
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 连接池中最多支持多少个活动会话
+      max-active: 20
+      # 回收空闲连接时，将保证至少有minIdle个连接
+      min-idle: 5
+      # 启动程序时，在连接池中初始化多少个连接
+      initial-size: 5
+      # 配置监控统计拦截的filters，stat:监控统计、log4j：日志记录、wall：防御sql注入
+      filters: stat, wall, log4j2
+      # 慢SQL记录
+      filter:
+        stat:
+          slow-sql-millis: 500
+          merge-sql: true
+      # 配置监控后台页面
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: momincong
+        login-password: momincong
+      # 统计过滤器
+      web-stat-filter:
+        # 过滤格式
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+        # 添加过滤路径
+        url-pattern: /*
+
+########################## 数据源配置 end ######################################################
+
+########################## Mybatis配置 #########################################################
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.moment.contact_book.entity
+
+########################## Mybatis配置 end #####################################################
