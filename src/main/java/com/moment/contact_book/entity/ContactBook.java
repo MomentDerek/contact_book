@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class ContactBook {
 
-    private Integer CId;
+    private String CId;
 
     private String CName;
 
@@ -27,5 +27,5 @@ public class ContactBook {
 
     private String CWork;
 
-    private Integer UId;
+    private String UId;
 }

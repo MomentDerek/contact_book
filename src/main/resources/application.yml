@@ -60,5 +60,12 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.moment.contact_book.entity
+  configuration:
+    map-underscore-to-camel-case: true
 
 ########################## Mybatis配置 end #####################################################
+logging:
+  level:
+    com:
+      moment:
+        contact_book: debug

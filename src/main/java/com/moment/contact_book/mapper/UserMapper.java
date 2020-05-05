@@ -3,6 +3,7 @@ package com.moment.contact_book.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import com.moment.contact_book.entity.User;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  * @Description: 查询，修改，删除用户信息
@@ -10,13 +11,16 @@ import org.apache.ibatis.annotations.Param;
  * @Date: 2020/5/3 20:25
  */
 @Mapper
+@Repository
 public interface UserMapper {
 
     //根据登陆名查找用户
     User findByLoginName(@Param("u_login_name") String loginName);
 
     //根据id查找用户
-    User findById(@Param("u_id") long id);
+    User findById(@Param("u_id") String id);
+
+    User findByEmail(@Param("u_email") String email);
 
     //根据u_id, u_login_name, u_password, u_email创建用户
     int insertUser(@Param("User") User user);
@@ -28,6 +32,6 @@ public interface UserMapper {
     int updateInfoById(@Param("User") User user);
 
     //注销用户
-    int deleteUserById(@Param("u_id") int id);
+    int deleteUserById(@Param("u_id") String id);
 
 }

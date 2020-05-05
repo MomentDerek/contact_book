@@ -11,9 +11,9 @@ import lombok.Data;
 @Data
 public class ContactType {
 
-    private Integer UId;
+    private String UId;
 
-    private Integer TypeId;
+    private String TypeId;
 
     private String TypeName;
 
