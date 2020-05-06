@@ -13,8 +13,9 @@
     <select id="findByUIdAndCNameOrCSexOrCType" resultType="com.moment.contact_book.entity.ContactBook">
         select * from contact_book
         <where>
+            u_id = #{u_id}
             <if test="c_name != null and c_name != ''">
-                c_name = #{c_name}
+                and c_name = #{c_name}
             </if>
             <if test="c_sex != null and c_sex != ''">
                 and c_sex = #{c_sex}
@@ -27,7 +28,7 @@
 
     <insert id="insertContact">
         insert into contact_book (c_id, c_name, c_phone, c_sex, u_id)
-        values (#{c_name}, #{c_name}, #{c_phone}, #{c_sex}, #{u_id})
+        values (#{c_id}, #{c_name}, #{c_phone}, #{c_sex}, #{u_id})
     </insert>
 
     <update id="updateInfoByCIdAndUId">

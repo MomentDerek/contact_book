@@ -44,7 +44,7 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public ContactType changeType(ContactType contactType) {
-        log.info("try to change type:" + contactType);
+        log.info("change type:" + contactType);
         if (typeMapper.findByUIdAndTypeId(contactType.getUId(), contactType.getTypeId()) != null) {
             if (typeMapper.updateInfoByUIdAndTypeId(contactType) == 1) {
                 log.info("change success");
@@ -57,7 +57,7 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public ContactType addType(String userId, String typeName) {
-        log.info("try to add the type: " + typeName + "; by User: " + userId);
+        log.info("add the type: " + typeName + "; by User: " + userId);
         if (userMapper.findById(userId) != null) {
             ContactType type = new ContactType();
             type.setUId(userId);
@@ -73,7 +73,7 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public int deleteType(ContactType contactType) {
-        log.info("try to delete the type: " + contactType);
+        log.info("delete the type: " + contactType);
         String uid = contactType.getUId();
         String tid = contactType.getTypeId();
         if (typeMapper.findByUIdAndTypeId(uid,tid) != null) {

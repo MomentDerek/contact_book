@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(String loginName, String password) {
-        log.info("try login:" + loginName + ":" + password);
+        log.info("login:" + loginName + ":" + password);
         User user = userMapper.findByLoginName(loginName);
         if (user != null) {
             if (user.getUPassword().equals(password)) {
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int register(String loginName, String password, String email) {
-        log.info("try register:" + loginName + ":" + password + ":" + email);
+        log.info("register:" + loginName + ":" + password + ":" + email);
         if (userMapper.findByLoginName(loginName) != null) {
             log.info("register fail: has the same loginName");
             return 2;
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int changePassword(String loginName, String oldPassword, String newPassword) {
-        log.info("try change password: " + loginName);
+        log.info("change password: " + loginName);
         User user = userMapper.findByLoginName(loginName);
         if (user == null) {
             log.info("change failed: unknown user");
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User changeInfo(User user) {
-        log.info("try change info: " + user);
+        log.info("change info: " + user);
         if (!(user.getULoginName().isEmpty()
                 | user.getUPassword().isEmpty()
                 | user.getUId().isEmpty()
@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int deleteUser(String loginName,String password) {
-        log.info("try to delete the user:"+loginName);
+        log.info("delete the user:"+loginName);
         User user = login(loginName, password);
         if (user != null) {
             if (userMapper.deleteUserById(user.getUId()) == 1) {
