@@ -20,7 +20,7 @@ public interface ContactTypeMapper {
     ContactType findByUIdAndTypeId(@Param("u_id") String UId, @Param("type_id") String TypeId);
 
     //根据u_id查找类别
-    List<ContactType> findById(@Param("u_id") String id);
+    List<ContactType> findByUId(@Param("u_id") String id);
 
     //根据u_id, type_id, type_name, type_comment创建类别
     int insertType(@Param("Type") ContactType type);

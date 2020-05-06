@@ -9,7 +9,7 @@
           and type_id = #{type_id}
     </select>
 
-    <select id="findById" resultType="com.moment.contact_book.entity.ContactType">
+    <select id="findByUId" resultType="com.moment.contact_book.entity.ContactType">
         select *
         from contact_type
         where u_id = #{u_id}

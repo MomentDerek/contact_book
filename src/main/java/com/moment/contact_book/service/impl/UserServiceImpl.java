@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
         user.setUEmail(email);
         int result = userMapper.insertUser(user);
         if (result == 1) {
-            log.info("register success!");
+            log.info("register success! the info is:"+user);
             return 1;
         }
         log.info("register fail: Unknown reason");
