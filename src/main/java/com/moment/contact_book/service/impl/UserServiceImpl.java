@@ -1,6 +1,7 @@
 package com.moment.contact_book.service.impl;
 
 import com.moment.contact_book.entity.User;
+import com.moment.contact_book.exception.ServiceException;
 import com.moment.contact_book.mapper.UserMapper;
 import com.moment.contact_book.service.UserService;
 import com.moment.contact_book.util.ServiceUtils;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
             }
         }
         log.info("login fail");
-        return null;
+        throw new ServiceException("用户名或密码错误");
     }
 
     @Override
@@ -45,11 +46,11 @@ public class UserServiceImpl implements UserService {
         log.info("register:" + loginName + ":" + password + ":" + email);
         if (userMapper.findByLoginName(loginName) != null) {
             log.info("register fail: has the same loginName");
-            return 2;
+            throw new ServiceException("用户名已存在");
         }
         if (userMapper.findByEmail(email) != null) {
             log.info("register fail: has the same email");
-            return 3;
+            throw new ServiceException("邮箱已存在");
         }
         User user = new User();
         user.setUId(ServiceUtils.generateShortUuid());
@@ -58,11 +59,11 @@ public class UserServiceImpl implements UserService {
         user.setUEmail(email);
         int result = userMapper.insertUser(user);
         if (result == 1) {
-            log.info("register success! the info is:"+user);
+            log.info("register success! the info is:" + user);
             return 1;
         }
         log.info("register fail: Unknown reason");
-        return 0;
+        throw new ServiceException("注册失败: Unknown reason 未知原因");
     }
 
     @Override
@@ -71,20 +72,20 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.findByLoginName(loginName);
         if (user == null) {
             log.info("change failed: unknown user");
-            return 0;
+            throw new ServiceException("用户不存在");
         }
         if (!user.getUPassword().equals(oldPassword)) {
             log.info("change failed: wrong password");
-            return 2;
+            throw new ServiceException("用户验证不通过,密码错误");
         }
         user.setUPassword(newPassword);
-        int result = userMapper.updatePasswordByLoginName(loginName,newPassword);
+        int result = userMapper.updatePasswordByLoginName(loginName, newPassword);
         if (result == 1) {
             log.info("change password success!");
             return 1;
         }
         log.info("change password fail: Unknown reason");
-        return 0;
+        throw new ServiceException("密码更改失败: Unknown reason 未知原因");
     }
 
     @Override
@@ -101,20 +102,20 @@ public class UserServiceImpl implements UserService {
                     return user;
                 } else {
                     log.info("change info failed: the update process ERRORS");
-                    return null;
+                    throw new ServiceException("数据库更新信息错误: 请检查你提交的信息");
                 }
             } else {
                 log.info("change info failed: the login info is wrong");
-                return null;
+                throw new ServiceException("用户验证失败");
             }
         }
         log.info("change info failed: some necessary info is empty");
-        return null;
+        throw new ServiceException("用户验证信息缺失");
     }
 
     @Override
-    public int deleteUser(String loginName,String password) {
-        log.info("delete the user:"+loginName);
+    public int deleteUser(String loginName, String password) {
+        log.info("delete the user:" + loginName);
         User user = login(loginName, password);
         if (user != null) {
             if (userMapper.deleteUserById(user.getUId()) == 1) {
@@ -122,11 +123,11 @@ public class UserServiceImpl implements UserService {
                 return 1;
             } else {
                 log.info("delete failed: process ERROR");
-                return 0;
+                throw new ServiceException("数据库删除信息错误: 请检查你提交的信息");
             }
         } else {
             log.info("delete failed: login info is wrong");
-            return 2;
+            throw new ServiceException("用户验证信息缺失");
         }
     }
 }

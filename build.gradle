@@ -30,6 +30,7 @@ repositories {
 ext{
     mybatisStarterVersion = "2.1.2"
     druidStarterVersion = "1.1.22"
+    fastJsonVersion = "1.2.68"
 }
 
 dependencies {
@@ -38,6 +39,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:'+mybatisStarterVersion
     implementation 'com.alibaba:druid-spring-boot-starter:'+druidStarterVersion
+    implementation 'com.alibaba:fastjson:'+fastJsonVersion
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java'
