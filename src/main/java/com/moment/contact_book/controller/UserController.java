@@ -83,7 +83,7 @@ public class UserController {
 
     @PostMapping("/user/update")
     public String login(@Valid @RequestBody User user) {
-        User result = userService.changeInfo(user);
+        userService.changeInfo(user);
         //转化为json对象并移除密码(主要是因为user对象设置了校验,密码不能为空)
         JSONObject userJSON = (JSONObject) JSON.toJSON(user);
         userJSON.remove("uPassword");

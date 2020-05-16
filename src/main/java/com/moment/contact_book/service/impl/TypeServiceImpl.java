@@ -1,6 +1,7 @@
 package com.moment.contact_book.service.impl;
 
 import com.moment.contact_book.entity.ContactType;
+import com.moment.contact_book.exception.ServiceException;
 import com.moment.contact_book.mapper.ContactTypeMapper;
 import com.moment.contact_book.mapper.UserMapper;
 import com.moment.contact_book.service.TypeService;
@@ -33,13 +34,27 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public List<ContactType> allType(String userId) {
         log.info("select the types by UId:" + userId);
-        return typeMapper.findByUId(userId);
+        List<ContactType> list = typeMapper.findByUId(userId);
+        if (null == list) {
+            log.error("find all type fail");
+            throw new ServiceException("联系人类型查询失败");
+        }
+        else if (list.isEmpty()) {
+            log.info("no type");
+            throw new ServiceException("没有设置联系人类型");
+        }
+        return list;
     }
 
     @Override
     public ContactType selectType(String userId, String typeId) {
         log.info("select the type by UId:" + userId + "; TId:" + typeId);
-        return typeMapper.findByUIdAndTypeId(userId, typeId);
+        ContactType type = typeMapper.findByUIdAndTypeId(userId, typeId);
+        if (null == type) {
+            log.error("select type fail");
+            throw new ServiceException("该联系人类型查询失败");
+        }
+        return type;
     }
 
     @Override
@@ -52,7 +67,7 @@ public class TypeServiceImpl implements TypeService {
             }
         }
         log.info("change failed");
-        return null;
+        throw new ServiceException("联系人类型更新失败");
     }
 
     @Override
@@ -63,12 +78,15 @@ public class TypeServiceImpl implements TypeService {
             type.setUId(userId);
             type.setTypeId(ServiceUtils.generateShortUuid());
             type.setTypeName(typeName);
-            typeMapper.insertType(type);
+            if( typeMapper.insertType(type) != 1){
+                log.error("add type fail, the info is wrong");
+                throw new ServiceException("联系人类型添加失败, 请检查类型信息");
+            }
             log.info("add type success! the info is: " + type);
             return type;
         }
-        log.info("add type fail");
-        return null;
+        log.info("add type fail, wrong user");
+        throw new ServiceException("用户信息错误,未找到该用户");
     }
 
     @Override
@@ -77,11 +95,15 @@ public class TypeServiceImpl implements TypeService {
         String uid = contactType.getUId();
         String tid = contactType.getTypeId();
         if (typeMapper.findByUIdAndTypeId(uid,tid) != null) {
-            if (typeMapper.deleteByUidAndTypeId(uid,tid) == 1){
+            if (typeMapper.deleteByUidAndTypeId(uid, tid) == 1) {
                 return 1;
+            } else {
+                log.info("delete type fail, the info is wrong");
+                throw new ServiceException("类型信息错误,请检查类型信息");
             }
         }
-        return 0;
+        log.info("delete type fail, wrong user");
+        throw new ServiceException("用户信息错误,未找到该用户");
     }
 
 
