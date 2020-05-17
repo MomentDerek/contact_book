@@ -2,6 +2,8 @@ package com.moment.contact_book.entity;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @Description: 联系人实体类
  * @Author: Moment
@@ -11,12 +13,16 @@ import lombok.Data;
 @Data
 public class ContactBook {
 
+    @NotNull
     private String CId;
 
+    @NotNull
     private String CName;
 
+    @NotNull
     private String CPhone;
 
+    @NotNull
     private String CSex;
 
     private String CType;
@@ -27,5 +33,6 @@ public class ContactBook {
 
     private String CWork;
 
+    @NotNull
     private String UId;
 }

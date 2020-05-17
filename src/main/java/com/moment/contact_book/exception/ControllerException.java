@@ -1,5 +1,7 @@
 package com.moment.contact_book.exception;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * @Description: Controller层的异常
  * @Author: Moment
@@ -7,9 +9,19 @@ package com.moment.contact_book.exception;
  */
 public class ControllerException extends BaseException {
 
+    private final int status;
+
+    public int getStatus() {
+        return status;
+    }
 
     public ControllerException(String message) {
         super(message);
+        status = HttpStatus.INTERNAL_SERVER_ERROR.value();
     }
 
+    public ControllerException(String message, int status) {
+        super(message);
+        this.status = status;
+    }
 }

@@ -38,11 +38,7 @@ public interface ContactService {
                                                      String CType);
 
     // 插入联系人
-    ContactBook insertContact(String UId,
-                              String CId,
-                              String CName,
-                              String CPhone,
-                              String CSex);
+    ContactBook insertContact(ContactBook contact);
 
     // 修改联系人信息
     ContactBook updateInfoByUIdAndCId(ContactBook contact);

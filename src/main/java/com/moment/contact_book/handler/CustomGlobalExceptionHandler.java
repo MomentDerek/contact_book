@@ -50,7 +50,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     @ExceptionHandler(ControllerException.class)
     public ResponseEntity<String> ControllerExceptionHandle(ControllerException e) {
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        body.put("status", e.getStatus());
 
         Map<String, String> error = new LinkedHashMap<>();
         error.put(e.getExceptionPath(), e.getMessage());

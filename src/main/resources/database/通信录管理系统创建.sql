@@ -36,7 +36,7 @@ CREATE TABLE `contact_book_system`.`Contact_Book` (
     OR c_sex = '其他'
   ),
   `c_type` CHAR(8) COMMENT '联系人分类',
-  `c_qq` VARCHAR(20) UNIQUE COMMENT '联系人QQ',
+  `c_qq` VARCHAR(20) COMMENT '联系人QQ',
   `c_address` VARCHAR(20) COMMENT '联系人地址',
   `c_work` VARCHAR(20) COMMENT '联系人职务',
   `u_id` CHAR(8) COMMENT '相关用户id',
