@@ -1,5 +1,6 @@
 package com.moment.contact_book.entity;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
  * @Date: 2020/5/3 9:05
  */
 
+@ApiModel("联系人类")
 @Data
 public class ContactBook {
 

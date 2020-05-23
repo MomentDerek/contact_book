@@ -31,6 +31,7 @@ ext{
     mybatisStarterVersion = "2.1.2"
     druidStarterVersion = "1.1.22"
     fastJsonVersion = "1.2.68"
+    knife4jVersion = "2.0.2"
 }
 
 dependencies {
@@ -40,6 +41,7 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:'+mybatisStarterVersion
     implementation 'com.alibaba:druid-spring-boot-starter:'+druidStarterVersion
     implementation 'com.alibaba:fastjson:'+fastJsonVersion
+    implementation 'com.github.xiaoymin:knife4j-spring-boot-starter:'+knife4jVersion
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java'

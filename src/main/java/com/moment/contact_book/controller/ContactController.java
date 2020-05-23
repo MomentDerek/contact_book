@@ -1,9 +1,13 @@
 package com.moment.contact_book.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.xiaoymin.knife4j.annotations.DynamicParameter;
+import com.github.xiaoymin.knife4j.annotations.DynamicParameters;
+import com.github.xiaoymin.knife4j.annotations.DynamicResponseParameters;
 import com.moment.contact_book.entity.ContactBook;
 import com.moment.contact_book.exception.ControllerException;
 import com.moment.contact_book.service.ContactService;
+import io.swagger.annotations.*;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +24,7 @@ import java.util.Map;
  * @Author: Moment
  * @Date: 2020/5/16 13:15
  */
+@Api(value="联系人controller",tags={"联系人操作接口"})
 @RestController
 @Validated
 @RequestMapping("/user/contact")
@@ -31,6 +36,15 @@ public class ContactController {
         this.contactService = contactService;
     }
 
+    @ApiOperation(value = "查询所有联系人接口",notes = "这里的用户id和用户名是二选一的,两个都有的时候是以id为主")
+    @DynamicParameters(properties = {
+            @DynamicParameter(name = "UId",value = "用户id"),
+            @DynamicParameter(name = "ULoginName",value = "用户名")
+    })
+    @DynamicResponseParameters(properties={
+            @DynamicParameter(name = "status",value = "状态码,成功是200,参数错误是400",example = "200"),
+            @DynamicParameter(name = "message", value = "成功时为联系人列表",example = "这里是一个联系人的数组,你用一下就知道了")
+    })
     @PostMapping("/all")
     public String listAll(@NotNull(message = "查询信息不得为空") Map<String, String> info) {
         JSONObject returnMsg = new JSONObject();
@@ -49,6 +63,15 @@ public class ContactController {
         }
     }
 
+    @ApiOperation("查询指定联系人接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "UId", value = "用户id"),
+            @ApiImplicitParam(name = "CId", value = "联系人id")
+    })
+    @DynamicResponseParameters(properties={
+            @DynamicParameter(name = "status",value = "状态码,成功是200,参数错误是400",example = "200"),
+            @DynamicParameter(name = "message", value = "成功时为联系人信息",dataTypeClass = com.moment.contact_book.entity.ContactBook.class)
+    })
     @PostMapping("/select")
     public String selectContact(@NotNull(message = "用户id不得为空") String UId,
                                 @NotNull(message = "联系人id不得为空") String CId) {
@@ -62,6 +85,17 @@ public class ContactController {
         return returnMsg.toJSONString();
     }
 
+    @ApiOperation("按照规则查询联系人接口")
+    @DynamicParameters(properties = {
+            @DynamicParameter(name = "UId",value = "用户id",required = true),
+            @DynamicParameter(name = "CName",value = "联系人名称,该选项支持模糊查询"),
+            @DynamicParameter(name = "CSex",value = "联系人性别"),
+            @DynamicParameter(name = "CType",value = "联系人类别id (这里建议你从类别接口那边获取,给个列表给用户选)")
+    })
+    @DynamicResponseParameters(properties={
+            @DynamicParameter(name = "status",value = "状态码,成功是200,参数错误是400",example = "200"),
+            @DynamicParameter(name = "message", value = "成功时为联系人列表",example = "这里是一个联系人的数组,你用一下就知道了")
+    })
     @PostMapping("/search")
     public String searchContact(@NotNull(message = "查询信息不得为空") Map<String, String> info) {
         JSONObject returnMsg = new JSONObject();
@@ -87,6 +121,11 @@ public class ContactController {
         return returnMsg.toJSONString();
     }
 
+    @ApiOperation("新增联系人接口")
+    @DynamicResponseParameters(properties={
+            @DynamicParameter(name = "status",value = "状态码,成功是200,参数错误是400",example = "200"),
+            @DynamicParameter(name = "message", value = "成功时为新增的联系人的信息",dataTypeClass = com.moment.contact_book.entity.ContactBook.class)
+    })
     @PostMapping("/insert")
     public String insertContact(@NotNull @Valid @RequestBody ContactBook contactBook) {
         JSONObject returnMsg = new JSONObject();
@@ -99,6 +138,11 @@ public class ContactController {
         return returnMsg.toJSONString();
     }
 
+    @ApiOperation("新增联系人接口")
+    @DynamicResponseParameters(properties={
+            @DynamicParameter(name = "status",value = "状态码,成功是200,参数错误是400",example = "200"),
+            @DynamicParameter(name = "message", value = "成功时为更新后的联系人的信息",dataTypeClass = com.moment.contact_book.entity.ContactBook.class)
+    })
     @PostMapping("/update")
     public String updateContact(@NotNull @Valid @RequestBody ContactBook contactBook) {
         JSONObject returnMsg = new JSONObject();
@@ -111,6 +155,15 @@ public class ContactController {
         return returnMsg.toJSONString();
     }
 
+    @ApiOperation("查询指定联系人接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "UId", value = "用户id"),
+            @ApiImplicitParam(name = "CId", value = "联系人id")
+    })
+    @DynamicResponseParameters(properties={
+            @DynamicParameter(name = "status",value = "状态码,成功是200,参数错误是400",example = "200"),
+            @DynamicParameter(name = "message", value = "success")
+    })
     @PostMapping("/delete")
     public String deleteContact(@NotNull(message = "用户id不得为空") String UId,
                                 @NotNull(message = "联系人id不得为空") String CId) {

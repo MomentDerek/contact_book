@@ -1,5 +1,5 @@
 spring:
-########################## 数据源配置 ##########################################################
+  ########################## 数据源配置 ##########################################################
   datasource:
     username: root
     password: momincong
@@ -69,3 +69,10 @@ logging:
     com:
       moment:
         contact_book: debug
+
+knife4j:
+  enable: true
+  markdowns: classpath:markdown/*
+
+server:
+  port: 8646

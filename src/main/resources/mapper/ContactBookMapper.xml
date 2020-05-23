@@ -15,7 +15,7 @@
         <where>
             u_id = #{u_id}
             <if test="c_name != null and c_name != ''">
-                and c_name = #{c_name}
+                and c_name like concat('%',#{c_name},'%')
             </if>
             <if test="c_sex != null and c_sex != ''">
                 and c_sex = #{c_sex}
