@@ -36,10 +36,8 @@ public class ContactTypeController {
         this.typeService = typeService;
     }
 
-    @ApiOperation("获取类型列表接口")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户id",example = "000001")
-    })
+    @ApiOperation(value = "获取类型列表接口",notes = "此处的举例为000001，因为bug不显示")
+    @ApiImplicitParam(name = "userId", value = "用户id",example = "000001")
     @DynamicResponseParameters(properties={
             @DynamicParameter(name = "status",value = "状态码,成功是200,参数错误是400",example = "200"),
             @DynamicParameter(name = "message", value = "成功时返回类型列表",example = "这玩意写不出来,自己试试就知道了")
@@ -80,7 +78,7 @@ public class ContactTypeController {
         return returnMsg.toJSONString();
     }
 
-    @ApiOperation("更新类型信息接口")
+    @ApiOperation(value = "更新类型信息接口",notes = "此处的类型说明typecomment可为空（具体请看其他文档-实体类说明)")
     @DynamicResponseParameters(properties={
             @DynamicParameter(name = "status",value = "状态码,成功是200,参数错误是400",example = "200"),
             @DynamicParameter(name = "message", value = "成功时返回类型信息",dataTypeClass = com.moment.contact_book.entity.ContactType.class)
@@ -121,7 +119,7 @@ public class ContactTypeController {
         return returnMsg.toJSONString();
     }
 
-    @ApiOperation("删除类型接口")
+    @ApiOperation(value = "删除类型接口",notes = "此处的类型说明typecomment可为空（具体请看其他文档-实体类说明)")
     @DynamicResponseParameters(properties={
             @DynamicParameter(name = "status",value = "状态码,成功是200,参数错误是400",example = "200"),
             @DynamicParameter(name = "message", value = "成功时为success",example = "success")

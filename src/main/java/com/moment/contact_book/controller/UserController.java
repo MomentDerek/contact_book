@@ -115,7 +115,7 @@ public class UserController {
         return returnMsg.toJSONString();
     }
 
-    @ApiOperation(value = "用户信息更新接口",notes = "这里的用户名和密码不能错,不然无法更新")
+    @ApiOperation(value = "用户信息更新接口",notes = "这里的用户名和密码不能错,不然无法更新，部分值可为空，具体请看其他文档-实体类说明")
     @DynamicResponseParameters(properties={
             @DynamicParameter(name = "status",value = "状态码,成功是200,参数错误是400",example = "200"),
             @DynamicParameter(name = "message", value = "成功时为用户信息",dataTypeClass = com.moment.contact_book.entity.User.class)
